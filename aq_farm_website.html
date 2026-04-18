@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQ Fruit & Agriculture Farm</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96B;
+    --purple: #3D1A5E;
+    --purple-mid: #5A2A8A;
+    --green: #1E6B3C;
+    --green-light: #2E9A58;
+    --cream: #FDF8EE;
+    --dark: #110A1F;
+    --text: #2A1A0E;
+    --mango: #F5A623;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(17,10,31,0.95);
+    backdrop-filter: blur(12px);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo span { color: #fff; font-weight: 400; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 0.875rem; font-weight: 500; letter-spacing: 0.04em;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold); color: var(--dark);
+    border: none; padding: 9px 20px; border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem;
+    cursor: pointer; transition: background 0.2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--dark) 0%, var(--purple) 50%, #1a0d30 100%);
+    display: flex; align-items: center;
+    padding: 100px 5% 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(201,168,76,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(30,107,60,0.15) 0%, transparent 60%);
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%;
+    position: relative; z-index: 2;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold); padding: 6px 14px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero-badge::before { content: '✦'; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900; line-height: 1.05;
+    color: #fff; margin-bottom: 1.5rem;
+  }
+  h1 em { color: var(--gold); font-style: italic; }
+  .hero-desc {
+    color: rgba(255,255,255,0.65); font-size: 1.05rem; line-height: 1.7;
+    margin-bottom: 2.5rem; max-width: 460px;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--dark); padding: 14px 32px; border-radius: 8px;
+    font-weight: 700; font-size: 0.95rem; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.45); }
+  .btn-secondary {
+    border: 1.5px solid rgba(255,255,255,0.3); color: #fff;
+    padding: 14px 32px; border-radius: 8px;
+    font-weight: 500; font-size: 0.95rem; text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+  .hero-visual {
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  .hero-cards-row { display: flex; gap: 1.2rem; }
+  .hero-card {
+    flex: 1; border-radius: 16px; overflow: hidden;
+    position: relative; min-height: 180px;
+    background: linear-gradient(135deg, #2E1A4A, #4A2A70);
+    display: flex; align-items: flex-end; padding: 1.2rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+  }
+  .hero-card:hover { transform: translateY(-4px); }
+  .hero-card.tall { min-height: 260px; }
+  .hero-card-emoji {
+    font-size: 4rem; position: absolute; top: 1rem; right: 1rem;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+  .hero-card-label {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    color: #fff; font-size: 1.1rem; line-height: 1.2;
+    position: relative; z-index: 1;
+  }
+  .hero-card-label small {
+    display: block; font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; color: var(--gold); font-weight: 600;
+    margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .hero-card.mango { background: linear-gradient(135deg, #3D2000, #7A4000); }
+  .hero-card.jaggery { background: linear-gradient(135deg, #3D1A5E, #6A2A90); }
+  .hero-card.goat { background: linear-gradient(135deg, #1E3D1A, #2E6B30); }
+
+  .hero-stats {
+    display: flex; gap: 1.5rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px; padding: 1.2rem 1.5rem;
+  }
+  .stat { text-align: center; }
+  .stat-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--gold); }
+  .stat-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat-div { width: 1px; background: rgba(201,168,76,0.2); align-self: stretch; }
+
+  /* SECTION SHARED */
+  section { padding: 100px 5%; }
+  .section-tag {
+    display: inline-block;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .section-tag::before { content: '— '; }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-desc { font-size: 1rem; color: #6B5A45; line-height: 1.7; max-width: 600px; }
+
+  /* PRODUCTS */
+  #products { background: var(--cream); }
+  .products-header { text-align: center; margin-bottom: 4rem; }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem; max-width: 1200px; margin: 0 auto;
+  }
+  .product-card {
+    background: #fff; border-radius: 20px; overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 48px rgba(0,0,0,0.12); }
+  .product-img {
+    height: 220px; display: flex; align-items: center; justify-content: center;
+    font-size: 6rem; position: relative; overflow: hidden;
+  }
+  .product-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.08));
+  }
+  .product-img.mango-bg { background: linear-gradient(135deg, #FFF3E0, #FFCC80); }
+  .product-img.jaggery-bg { background: linear-gradient(135deg, #EDE7F6, #CE93D8); }
+  .product-img.jaggery2-bg { background: linear-gradient(135deg, #F3E5F5, #BA68C8); }
+  .product-img.goat-bg { background: linear-gradient(135deg, #E8F5E9, #A5D6A7); }
+  .product-body { padding: 1.5rem; }
+  .product-category {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .product-name {
+    font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700;
+    margin-bottom: 0.6rem; color: var(--dark);
+  }
+  .product-desc { font-size: 0.88rem; color: #7A6550; line-height: 1.6; margin-bottom: 1.2rem; }
+  .product-features { list-style: none; margin-bottom: 1.5rem; }
+  .product-features li {
+    font-size: 0.82rem; color: #5A4535; padding: 3px 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .product-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900;
+    color: var(--purple);
+  }
+  .product-price small { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: #9A8A75; font-weight: 400; }
+  .add-btn {
+    background: var(--purple); color: #fff;
+    border: none; padding: 10px 20px; border-radius: 8px;
+    font-weight: 600; font-size: 0.85rem; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .add-btn:hover { background: var(--purple-mid); transform: scale(1.04); }
+
+  /* FEATURED BANNER */
+  .featured-banner {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--dark) 100%);
+    border-radius: 24px; padding: 4rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: center;
+    max-width: 1200px; margin: 0 auto 2rem;
+    position: relative; overflow: hidden;
+  }
+  .featured-banner::before {
+    content: '';
+    position: absolute; right: -80px; top: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,168,76,0.2), transparent 70%);
+    border-radius: 50%;
+  }
+  .featured-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(201,168,76,0.2); border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold); padding: 5px 12px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 1rem;
+  }
+  .featured-banner h3 {
+    font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900;
+    color: #fff; margin-bottom: 1rem; line-height: 1.1;
+  }
+  .featured-banner h3 em { color: var(--gold); font-style: italic; }
+  .featured-banner p { color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 2rem; }
+  .featured-emoji { font-size: 8rem; text-align: center; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4)); }
+
+  /* WHY US */
+  #why {
+    background: linear-gradient(180deg, var(--cream) 0%, #F0EAD8 100%);
+  }
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto;
+  }
+  .why-features { display: flex; flex-direction: column; gap: 1.5rem; }
+  .why-feature {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1.5rem; background: #fff; border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border-left: 3px solid var(--gold);
+    transition: transform 0.25s;
+  }
+  .why-feature:hover { transform: translateX(6px); }
+  .why-icon { font-size: 2rem; flex-shrink: 0; }
+  .why-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.35rem; }
+  .why-text { font-size: 0.87rem; color: #7A6550; line-height: 1.6; }
+  .why-visual {
+    background: linear-gradient(135deg, var(--purple), var(--dark));
+    border-radius: 24px; padding: 3rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .why-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 30%, rgba(201,168,76,0.2), transparent 60%);
+  }
+  .why-visual-emoji { font-size: 5rem; display: block; margin-bottom: 1.5rem; position: relative; }
+  .why-visual h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900;
+    color: #fff; margin-bottom: 0.75rem; position: relative;
+  }
+  .why-visual p { color: rgba(255,255,255,0.6); font-size: 0.9rem; position: relative; }
+  .delivery-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(201,168,76,0.2); border: 1px solid var(--gold);
+    color: var(--gold); padding: 8px 16px; border-radius: 20px;
+    font-weight: 700; font-size: 0.8rem; margin-top: 1.5rem;
+    position: relative;
+  }
+
+  /* TESTIMONIALS */
+  #reviews {
+    background: var(--dark);
+    text-align: center;
+  }
+  #reviews h2 { color: #fff; }
+  #reviews .section-tag { display: block; margin-bottom: 0.5rem; }
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; max-width: 1100px; margin: 3rem auto 0;
+  }
+  .review-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 16px; padding: 1.8rem;
+    text-align: left; transition: border-color 0.25s;
+  }
+  .review-card:hover { border-color: rgba(201,168,76,0.4); }
+  .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; }
+  .review-text { color: rgba(255,255,255,0.75); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+  .reviewer { display: flex; align-items: center; gap: 10px; }
+  .reviewer-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: #fff; font-size: 1rem;
+  }
+  .reviewer-name { font-weight: 600; color: #fff; font-size: 0.9rem; }
+  .reviewer-loc { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+  /* ORDER / CONTACT */
+  #order {
+    background: linear-gradient(135deg, var(--green) 0%, #0D3D20 100%);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #order::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,0.06), transparent);
+  }
+  #order h2 { color: #fff; }
+  #order .section-tag { color: var(--gold-light); }
+  .order-desc { color: rgba(255,255,255,0.7); max-width: 550px; margin: 0 auto 2.5rem; line-height: 1.7; }
+  .contact-row {
+    display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .contact-chip {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    color: #fff; padding: 12px 22px; border-radius: 50px;
+    font-weight: 500; font-size: 0.9rem; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .contact-chip:hover { background: rgba(255,255,255,0.2); }
+  .contact-chip .icon { font-size: 1.2rem; }
+  .order-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--dark); padding: 16px 48px; border-radius: 50px;
+    font-weight: 700; font-size: 1.05rem; text-decoration: none;
+    box-shadow: 0 6px 32px rgba(201,168,76,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .order-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(201,168,76,0.5); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 2.5rem 5%;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    font-size: 0.85rem;
+  }
+  footer strong { color: var(--gold); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .featured-banner { grid-template-columns: 1fr; padding: 2rem; }
+    .featured-emoji { display: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr; }
+    section { padding: 70px 4%; }
+  }
+
+  /* CART TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem;
+    background: var(--green); color: #fff;
+    padding: 12px 24px; border-radius: 50px;
+    font-weight: 600; font-size: 0.9rem;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.25);
+    transform: translateY(100px); opacity: 0;
+    transition: transform 0.35s, opacity 0.35s;
+    z-index: 999;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* CART INDICATOR */
+  .cart-badge {
+    background: var(--gold); color: var(--dark);
+    border-radius: 50%; width: 20px; height: 20px;
+    font-size: 0.7rem; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🌾 <span>AQ</span> Fruit Farm</div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#order">Order</a></li>
+  </ul>
+  <a href="#order" class="nav-cta">Order Now <span class="cart-badge" id="cartBadge">0</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">Export Quality • Pakistan Wide Delivery</div>
+      <h1>The Finest <em>Fruits &amp; Organics</em> from the Heart of Pakistan</h1>
+      <p class="hero-desc">Sindhri, Chunsa, and Anwar Ratol mangoes — plus pure organic jaggery and farm-fresh produce. Delivered anywhere in Pakistan.</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn-primary">Shop Now</a>
+        <a href="#order" class="btn-secondary">WhatsApp Order</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-cards-row">
+        <div class="hero-card mango tall">
+          <div class="hero-card-emoji">🥭</div>
+          <div class="hero-card-label"><small>Season Special</small>Premium Mangoes</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1.2rem;flex:1">
+          <div class="hero-card jaggery">
+            <div class="hero-card-emoji">🫙</div>
+            <div class="hero-card-label"><small>Organic</small>Ginger Jaggery</div>
+          </div>
+          <div class="hero-card goat">
+            <div class="hero-card-emoji">🐐</div>
+            <div class="hero-card-label"><small>Farm Fresh</small>Goat Products</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-val">153+</div><div class="stat-lbl">Followers</div></div>
+        <div class="stat-div"></div>
+        <div class="stat"><div class="stat-val">65+</div><div class="stat-lbl">Posts</div></div>
+        <div class="stat-div"></div>
+        <div class="stat"><div class="stat-val">100%</div><div class="stat-lbl">Organic</div></div>
+        <div class="stat-div"></div>
+        <div class="stat"><div class="stat-val">PK 🇵🇰</div><div class="stat-lbl">Delivery</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-header">
+    <div class="section-tag">Our Products</div>
+    <h2>Fresh From Farm to Your Door</h2>
+    <p class="section-desc" style="margin:0 auto">Handpicked, export-quality produce delivered straight to you across Pakistan.</p>
+  </div>
+
+  <!-- Featured Banner -->
+  <div class="featured-banner" style="margin-bottom:2.5rem">
+    <div>
+      <div class="featured-tag">🌟 Mango Season</div>
+      <h3>The King of <em>Mangoes</em> is Almost Here</h3>
+      <p>Get ready for Sindhri, Chunsa, and Anwar Ratol — Pakistan's most prized mango varieties. Pre-order now for priority delivery straight from the orchard.</p>
+      <a href="#order" class="btn-primary">Pre-Order Mangoes</a>
+    </div>
+    <div class="featured-emoji">🥭👑</div>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- Sindhri -->
+    <div class="product-card">
+      <div class="product-img mango-bg">🥭</div>
+      <div class="product-body">
+        <div class="product-category">Premium Mangoes</div>
+        <div class="product-name">Sindhri Mangoes</div>
+        <p class="product-desc">The "Queen of Mangoes" — golden, fibre-free, honeyed sweetness. Grown in Sindh and harvested at peak ripeness.</p>
+        <ul class="product-features">
+          <li>Export quality, handpicked</li>
+          <li>Fibre-free, juicy flesh</li>
+          <li>Delivery across Pakistan</li>
+        </ul>
+        <div class="product-footer">
+          <div class="product-price">PKR 1,200 <small>/ dozen</small></div>
+          <button class="add-btn" onclick="addToCart('Sindhri Mangoes')">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chunsa -->
+    <div class="product-card">
+      <div class="product-img mango-bg" style="background:linear-gradient(135deg,#FFF8E1,#FFE082)">🍋🥭</div>
+      <div class="product-body">
+        <div class="product-category">Premium Mangoes</div>
+        <div class="product-name">Chunsa Mangoes</div>
+        <p class="product-desc">Intensely aromatic with a rich, creamy texture. One of Pakistan's most beloved mango varieties for eating and juicing.</p>
+        <ul class="product-features">
+          <li>Exceptionally aromatic</li>
+          <li>Creamy, rich pulp</li>
+          <li>Available in-season</li>
+        </ul>
+        <div class="product-footer">
+          <div class="product-price">PKR 1,100 <small>/ dozen</small></div>
+          <button class="add-btn" onclick="addToCart('Chunsa Mangoes')">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Anwar Ratol -->
+    <div class="product-card">
+      <div class="product-img mango-bg" style="background:linear-gradient(135deg,#FFF3E0,#FFAB40)">🥭✨</div>
+      <div class="product-body">
+        <div class="product-category">Premium Mangoes</div>
+        <div class="product-name">Anwar Ratol Mangoes</div>
+        <p class="product-desc">Small, intensely sweet, and fragrant — Anwar Ratol is a connoisseur's favourite with an unmatched flavour profile.</p>
+        <ul class="product-features">
+          <li>Intensely sweet & fragrant</li>
+          <li>Limited seasonal supply</li>
+          <li>Pre-order recommended</li>
+        </ul>
+        <div class="product-footer">
+          <div class="product-price">PKR 1,500 <small>/ dozen</small></div>
+          <button class="add-btn" onclick="addToCart('Anwar Ratol Mangoes')">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ginger Jaggery -->
+    <div class="product-card">
+      <div class="product-img jaggery-bg">🫙</div>
+      <div class="product-body">
+        <div class="product-category">AQ Organic Jaggery</div>
+        <div class="product-name">Ginger Jaggery</div>
+        <p class="product-desc">Pure, unrefined jaggery infused with natural ginger — a warming digestive aid rich in iron and minerals. Chemical-free.</p>
+        <ul class="product-features">
+          <li>Rich in iron & minerals</li>
+          <li>Natural digestive aid</li>
+          <li>Chemical-free, unrefined</li>
+          <li>Ginger infusion blend</li>
+        </ul>
+        <div class="product-footer">
+          <div class="product-price">PKR 500 <small>/ jar</small></div>
+          <button class="add-btn" onclick="addToCart('Ginger Jaggery')">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plain Jaggery -->
+    <div class="product-card">
+      <div class="product-img jaggery2-bg">🍯</div>
+      <div class="product-body">
+        <div class="product-category">AQ Organic Jaggery</div>
+        <div class="product-name">Pure Organic Jaggery</div>
+        <p class="product-desc">Nature's gift of sweetness — experience the purest, most wholesome form of jaggery. Unrefined and naturally processed.</p>
+        <ul class="product-features">
+          <li>100% pure, natural flavour</li>
+          <li>Unrefined & wholesome</li>
+          <li>Chemical-free processing</li>
+          <li>Bulk deal: 2 jars for PKR 900</li>
+        </ul>
+        <div class="product-footer">
+          <div class="product-price">PKR 500 <small>/ jar</small></div>
+          <button class="add-btn" onclick="addToCart('Pure Organic Jaggery')">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Goat Products -->
+    <div class="product-card">
+      <div class="product-img goat-bg">🐐</div>
+      <div class="product-body">
+        <div class="product-category">Farm Fresh</div>
+        <div class="product-name">Goat Farm Products</div>
+        <p class="product-desc">Farm-raised goats — healthy, free-range, and naturally fed. Available for Eid orders and year-round farm produce inquiries.</p>
+        <ul class="product-features">
+          <li>Free-range, farm raised</li>
+          <li>Naturally fed</li>
+          <li>Eid & bulk orders welcome</li>
+        </ul>
+        <div class="product-footer">
+          <div class="product-price">Inquire <small>for price</small></div>
+          <button class="add-btn" onclick="addToCart('Goat Farm Products')">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-grid">
+    <div>
+      <div class="section-tag">Why AQ Farm</div>
+      <h2>Quality You Can Taste, Trust You Can Count On</h2>
+      <p class="section-desc" style="margin-bottom:2.5rem">We take pride in every product we grow and deliver. Here's what makes us different.</p>
+      <div class="why-features">
+        <div class="why-feature">
+          <div class="why-icon">🌱</div>
+          <div>
+            <div class="why-title">100% Natural & Chemical-Free</div>
+            <p class="why-text">Our produce is grown without harmful chemicals. Pure, natural, and as nature intended.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-icon">🚚</div>
+          <div>
+            <div class="why-title">Nationwide Delivery</div>
+            <p class="why-text">We deliver throughout Pakistan — from Karachi to Peshawar, your order reaches your door.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-icon">👨‍🌾</div>
+          <div>
+            <div class="why-title">Export Quality Standard</div>
+            <p class="why-text">Only the finest, handpicked produce meets our export quality standard before it reaches you.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-icon">⭐</div>
+          <div>
+            <div class="why-title">100% Customer Satisfaction</div>
+            <p class="why-text">Real customer reviews and repeat orders speak for our quality. We stand behind every product.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <span class="why-visual-emoji">🥭</span>
+      <h3>Fresh Mango Season is Almost Here</h3>
+      <p>Pre-order now and be among the first to receive this season's premium mangoes directly from the orchard to your home.</p>
+      <div class="delivery-badge">🇵🇰 Delivering All Across Pakistan</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-tag">Customer Reviews</div>
+  <h2 style="color:#fff">What Our Customers Say</h2>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"The Sindhri mangoes were absolutely incredible — fresh, sweet, and arrived in perfect condition. Will definitely order again next season!"</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">A</div>
+        <div>
+          <div class="reviewer-name">Ahmed K.</div>
+          <div class="reviewer-loc">Karachi</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"The ginger jaggery is amazing — such a pure, natural taste. My family loves it. Great packaging and fast delivery to Lahore!"</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">S</div>
+        <div>
+          <div class="reviewer-name">Sara M.</div>
+          <div class="reviewer-loc">Lahore</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Ordered Anwar Ratol mangoes and they were out of this world. The quality is genuinely export-grade. Highly recommend AQ Fruit Farm!"</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">U</div>
+        <div>
+          <div class="reviewer-name">Usman R.</div>
+          <div class="reviewer-loc">Islamabad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section id="order">
+  <div class="section-tag">Get In Touch</div>
+  <h2 style="margin-bottom:1rem">Ready to Order?</h2>
+  <p class="order-desc">Reach out via WhatsApp, Instagram, or Facebook. We'll confirm your order and arrange delivery anywhere in Pakistan.</p>
+  <div class="contact-row">
+    <a href="https://wa.me/923263086834" class="contact-chip" target="_blank">
+      <span class="icon">📱</span> WhatsApp: 03263086834
+    </a>
+    <a href="https://www.instagram.com/aqfruitandagriculturefarm" class="contact-chip" target="_blank">
+      <span class="icon">📸</span> @aqfruitandagriculturefarm
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61559484332020" class="contact-chip" target="_blank">
+      <span class="icon">👥</span> Facebook Page
+    </a>
+  </div>
+  <a href="https://wa.me/923263086834?text=Hello!%20I%20want%20to%20place%20an%20order." class="order-btn" target="_blank">
+    💬 Order via WhatsApp Now
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:0.4rem"><strong>AQ Fruit & Agriculture Farm</strong></p>
+  <p>Owner: @faiqkhanzada &nbsp;|&nbsp; Call/WhatsApp: 03263086834 &nbsp;|&nbsp; Delivery throughout Pakistan</p>
+  <p style="margin-top:0.75rem;font-size:0.75rem">© 2025 AQ Fruit & Agriculture Farm. Freshness in Every Bite.</p>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Added! WhatsApp us to confirm your order.</div>
+
+<script>
+  let cartCount = 0;
+  function addToCart(name) {
+    cartCount++;
+    document.getElementById('cartBadge').textContent = cartCount;
+    const toast = document.getElementById('toast');
+    toast.textContent = `✓ ${name} added! WhatsApp us to confirm.`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.boxShadow = '0 4px 32px rgba(0,0,0,0.4)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
